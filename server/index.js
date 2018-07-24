@@ -5,6 +5,8 @@ const app = express();
 const { generateToken, refreshToken } = require("./auth");
 const PORT = 8080;
 
+console.log(generateToken);
+
 const urlencodedParser = bodyParser.urlencoded({ extended: false });
 
 app.post("/api/login", urlencodedParser, (req, res) => {

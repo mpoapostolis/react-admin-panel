@@ -1,4 +1,4 @@
-import {css} from 'emotion';
+import { css } from "emotion"
 
 export const tabsCont = css`
   margin-top: 50px;
@@ -6,7 +6,7 @@ export const tabsCont = css`
   justify-content: center;
   align-items: flex-end;
   width: 100%;
-`;
+`
 
 export const tabs = css`
   width: 95%;
@@ -16,11 +16,11 @@ export const tabs = css`
   &.um {
     width: 100%;
   }
-`;
+`
 
 export const tabBtn = css`
   width: 100%;
-`;
+`
 
 export const tabItem = css`
   color: rgba(0, 0, 0, 0.45);
@@ -33,4 +33,4 @@ export const tabItem = css`
   }
   font-size: large;
   width: 15%;
-`;
+`

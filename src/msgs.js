@@ -1,10 +1,11 @@
-import curry from 'ramda/src/curry';
-import pathOr from 'ramda/src/pathOr';
+import curry from "ramda/src/curry"
+import pathOr from "ramda/src/pathOr"
 
 export const MSGS = {
-  name: {
-    en: 'Contest ID',
-  },
-};
+  Test: {
+    en: "Test",
+    ar: "Test"
+  }
+}
 
-export const getMsg = curry((lng, key) => pathOr(key, [key, lng], MSGS));
+export const getMsg = curry((lng, key) => pathOr(key, [key, lng], MSGS))

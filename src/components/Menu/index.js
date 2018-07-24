@@ -1,59 +1,51 @@
-import React, {Component} from 'react';
-import * as styles from './css';
-import {menuItems} from '../../utils';
-import {WithPermissionWrapper} from '../PermissionWrapper/WithPermission';
-import keys from 'ramda/src/keys';
-import Collapse from '../Collapse';
+import React, { Component } from "react"
+import { menuItems } from "../../utils"
+import keys from "ramda/src/keys"
+import { dl, dd, logo } from "./css"
 
 class Menu extends Component {
   isActive = pathArr => {
-    const urlPath = window.location.pathname;
-    const isHome = urlPath === '/';
-    if (pathArr.includes('/')) return isHome ? 'active' : '';
-    else return pathArr.find(e => urlPath.match(e)) ? 'active' : '';
-  };
+    const urlPath = window.location.pathname
+    const isHome = urlPath === "/"
+    if (pathArr.includes("/")) return isHome ? "active" : ""
+    else return pathArr.find(e => urlPath.match(e)) ? "active" : ""
+  }
+
+  handlePath = ({ currentTarget }) => {
+    const { push } = this.props
+    // normalize URL
+    const path = currentTarget.getAttribute("path").replace(/\/\//g, "/")
+    push(path)
+  }
 
   renMenuItems = (section, outKey) => {
-    const {authorities} = this.props.auth;
-    const {push} = this.props.history;
-    const {menuItemClass, sectionClass} = styles;
+    const { authorities } = this.props
     const itemArr = menuItems[section].filter(e =>
       authorities.includes(e.permissions)
-    );
-
-    return section === 'undefined' ? (
-      <div key={outKey} className={sectionClass}>
-        {itemArr.map((item, inKey) => (
-          <WithPermissionWrapper key={inKey} permissions={[item.permissions]}>
-            <div
-              onClick={() => push(`/${item.path[0]}`.replace(/\/\//, '/'))}
-              className={`${menuItemClass} ${this.isActive(item.path)}`}>
-              {item.group}
-            </div>
-          </WithPermissionWrapper>
+    )
+    const renSection = itemArr.length
+    return renSection ? (
+      <dl key={outKey} className={dl}>
+        <dt>{section.replace(/undefined/g, "")}</dt>
+        {itemArr.map((obj, key) => (
+          <dd
+            key={key}
+            path={`/${obj.path[0]}`}
+            onClick={this.handlePath}
+            className={`${dd} ${this.isActive(obj.path)}`}>
+            {obj.name.replace(/read/gi, "")}
+          </dd>
         ))}
-      </div>
+      </dl>
     ) : (
-      <Collapse key={outKey} heightOfRow={30} label={section}>
-        {itemArr.map((item, inKey) => (
-          <WithPermissionWrapper key={inKey} permissions={[item.permissions]}>
-            <div
-              key={inKey}
-              onClick={() => push(`/${item.path[0]}`.replace(/\/\//, '/'))}
-              className={`${menuItemClass} ${this.isActive(item.path)}`}>
-              {item.group}
-            </div>
-          </WithPermissionWrapper>
-        ))}
-      </Collapse>
-    );
-  };
+      <div />
+    )
+  }
 
   render() {
-    const sections = keys(menuItems);
-    const {container, logo} = styles;
+    const sections = keys(menuItems)
     return (
-      <div className={container}>
+      <div>
         <img
           className={logo}
           onClick={this.goHome}
@@ -62,8 +54,8 @@ class Menu extends Component {
         />
         {sections.map((section, key) => this.renMenuItems(section, key))}
       </div>
-    );
+    )
   }
 }
 
-export default Menu;
+export default Menu

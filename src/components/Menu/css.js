@@ -1,40 +1,42 @@
-import {css} from 'emotion';
-
-export const container = css`
-  padding: 0 10px 0 10px;
-  color: white;
-  color: #999999;
-`;
+import { css } from "emotion"
 
 export const logo = css`
   display: flex;
   flex-direction: center;
-  max-width: 150px;
-  margin-bottom: 35px;
-`;
+  width: 130px;
+  margin: 0 0 35px 10px;
+`
 
-export const activeContestLabel = css`
-  font-size: small;
-  color: #000;
-`;
-
-export const menuItemClass = css`
-  height: 30px;
+export const dl = css`
+  width: 100%;
+  color: #9b9b9b;
   padding-left: 10px;
+  font-size: small;
+  border-bottom: solid 1px #ffffff3f;
+  &:last-child {
+    border: none;
+  }
+`
+
+export const dd = css`
+  width: calc(100% - 20px);
   display: flex;
   align-items: center;
+  margin-left: -10px;
+  height: 40px;
+  font-weight: 600;
+  padding-left: 20px;
+  color: #ffffffcf;
+  font-size: normal;
   cursor: pointer;
-  user-select: none;
-  &.active {
-    color: white;
-    font-weight: 600;
-  }
   &:hover {
-    background: rgba(0, 139, 206, 0.225);
+    color: #ffffffef;
+    background-color: #002537cf;
   }
-  transition: 0.125s;
-`;
-
-export const sectionClass = css`
-  border-bottom: solid 1px rgba(255, 255, 255, 0.15);
-`;
+  &.active {
+    width: calc(100% - 23px);
+    border-left: solid 3px #008fd8;
+    color: #0096e2;
+    background-color: #002537;
+  }
+`

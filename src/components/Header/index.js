@@ -1,116 +1,88 @@
-import React, {Component} from 'react';
-import * as styles from './css';
-import {connect} from 'react-redux';
-import actions from '../../redux/actions';
-import {bindActionCreators} from 'redux';
-import Popover from 'material-ui/Popover';
+import React, { Component } from "react"
+import PropTypes from "prop-types"
+import { withStyles } from "@material-ui/core/styles"
+import AppBar from "@material-ui/core/AppBar"
+import Toolbar from "@material-ui/core/Toolbar"
+import IconButton from "@material-ui/core/IconButton"
+import MenuIcon from "@material-ui/icons/Menu"
+import Account from "@material-ui/icons/AccountCircle"
+import Badge from "@material-ui/core/Badge"
+import Notifications from "@material-ui/icons/NotificationsOutlined"
 
-class Header extends Component {
-  state = {
-    open: false,
-    anchorOriginVertical: 'bottom',
-    anchorOriginHorizontal: 'left',
-    transformOriginVertical: 'top',
-    transformOriginHorizontal: 'left',
-    anchorReference: 'anchorEl',
-  };
+const styles = theme => ({
+  appBar: {
+    boxShadow: "0 4px 2px -2px rgba(0, 0, 0, 0.15)"
+  },
+  Toolbar: {
+    flexGrow: 1,
+    dipslay: "flex",
+    justifyContent: "space-between",
+    backgroundColor: "#FFF",
+    color: "#000"
+  },
+  margin: {
+    margin: theme.spacing.unit * 2,
+    color: "#0000009F"
+  },
+  info: {
+    display: "flex"
+  }
+})
 
+class ButtonAppBar extends Component {
   handleClick = () =>
     this.setState({
-      open: true,
-    });
+      open: true
+    })
 
   handleClose = () =>
     this.setState({
-      open: false,
-    });
+      open: false
+    })
 
   setRef = node => {
-    this.anchorEl = node;
-  };
+    this.anchorEl = node
+  }
 
-  goHome = () => this.props.history.push('/');
+  goHome = () => this.props.history.push("/")
 
-  handleLogout = () => this.props.logout();
+  handleLogout = () => this.props.logout()
 
   render() {
-    const {container, infos, avatar, menuItem, leftSide, rightSide} = styles;
-    const {
-      open,
-      anchorOriginVertical,
-      anchorOriginHorizontal,
-      transformOriginVertical,
-      transformOriginHorizontal,
-      positionTop,
-      positionLeft,
-      anchorReference,
-    } = this.state;
+    const { classes, toggleMenu, notifications = 0 } = this.props
+    const role = "Admin"
+    const name = "Admin"
 
-    const {role, name} = this.props.auth;
     return (
-      <div className={container}>
-        <div className={avatar}>{name[0].toUpperCase()}</div>
-        <div className={infos}>
-          <b ref={this.setRef} onClick={this.handleClick}>
-            {name} ⌄
-          </b>
-          <div>{role}</div>
-        </div>
-
-        <Popover
-          open={open}
-          anchorEl={this.anchorEl}
-          anchorReference={anchorReference}
-          anchorPosition={{top: positionTop, left: positionLeft}}
-          onClose={this.handleClose}
-          anchorOrigin={{
-            vertical: anchorOriginVertical,
-            horizontal: anchorOriginHorizontal,
-          }}
-          transformOrigin={{
-            vertical: transformOriginVertical,
-            horizontal: transformOriginHorizontal,
-          }}>
-          <div onClick={this.goHome} className={menuItem}>
-            <div className={leftSide}>
-              <img
-                alt=":)"
-                className={`${avatar} small`}
-                src={'/images/account.png'}
-              />
-            </div>
-            <div className={rightSide}>
-              <b>{role}</b>
-              <div>{name}</div>
-            </div>
+      <AppBar className={classes.appBar} position="static">
+        <Toolbar className={classes.Toolbar}>
+          <IconButton onClick={toggleMenu} color="inherit" aria-label="Menu">
+            <MenuIcon />
+          </IconButton>
+          <div className={classes.info}>
+            <IconButton>
+              <Badge
+                className={classes.margin}
+                badgeContent={4}
+                color="secondary">
+                <Notifications />
+              </Badge>
+            </IconButton>
+            <IconButton
+              ref={this.setRef}
+              onClick={this.handleClick}
+              className={classes.account}>
+              <Account />
+            </IconButton>
           </div>
-          <div className={menuItem} onClick={this.handleLogout}>
-            <div className={leftSide}>
-              <img
-                alt=":)"
-                className={`${avatar} small`}
-                src={'/images/logout.png'}
-              />
-            </div>
-            <div className={rightSide}>Logout</div>
-          </div>
-        </Popover>
-      </div>
-    );
+        </Toolbar>
+      </AppBar>
+    )
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    auth: state.auth,
-  };
+ButtonAppBar.propTypes = {
+  classes: PropTypes.object.isRequired
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {logout: actions.logout, getRefreshToken: actions.getRefreshToken},
-    dispatch
-  );
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default withStyles(styles)(ButtonAppBar)

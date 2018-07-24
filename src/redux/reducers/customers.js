@@ -1,16 +1,17 @@
 import mergeDeepLeft from "ramda/src/mergeDeepLeft"
-import { UPDATE_REPORTS } from "../actions/names"
+import { UPDATE_CUSTOMERS } from "../actions/names"
 
-const initReports = {
+//  Mock
+const initCustomers = {
   data: [],
   limit: 0,
   offset: 0,
   total: 0
 }
 
-export const reports = (state = initReports, { type, payload }) => {
+export const customers = (state = initCustomers, { type, payload }) => {
   switch (type) {
-    case UPDATE_REPORTS:
+    case UPDATE_CUSTOMERS:
       return mergeDeepLeft(payload, state)
     default:
       return state

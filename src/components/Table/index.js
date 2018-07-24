@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
-import pluck from 'ramda/src/pluck';
-import format from 'date-fns/format';
-import Popover from 'material-ui/Popover';
-import Checkbox from 'material-ui/Checkbox';
-import SpinnerHOC from '../SpinnerHOC';
-import * as styles from './css';
+import React, { Component } from "react"
+import pluck from "ramda/src/pluck"
+import format from "date-fns/format"
+import Popover from "@material-ui/core//Popover"
+import Checkbox from "@material-ui/core//Checkbox"
+import SpinnerHOC from "../SpinnerHOC"
 
+import * as styles from "./css"
 /*****************************************************************************************************************************************
  * @param {object[]} tableConf
  * @param {object[]} data
@@ -18,34 +18,38 @@ tableConf[0] {
   name:string, 
   key:string, 
   type:string,
-  renderer? = fn: any => <Elem>{any}</Elem> | <Elem {...any}/> 
+  renderer? = fn -> 'b -> 'a
+   example: 
+         obj.renderer(id) => <Elem>{id}</Elem> 
+      |  obj.rendere([prop1,prop2,prop3]) => <Elem {...b}/> 
+      |  obj.renderer() => <Elem> 
 }
 */
 
 class Table extends Component {
   constructor(props) {
-    super(props);
-    const { tableConf } = props;
+    super(props)
+    const { tableConf } = props
     const state = {
       showCol: new Array(tableConf.length).fill(true),
-      tableConf,
-    };
-    this.state = state;
+      tableConf
+    }
+    this.state = state
   }
 
   componentWillUnmount() {
-    this.props.clearFilters();
+    this.props.clearFilters()
   }
 
-  /********************************* Determines what popOver will show  **********************************/
+  /********************************* Determines what popover will show  **********************************/
   popOverContent = () => {
-    const { type } = this.state.popOver.dataset;
-    const { menuItem, displayClass } = styles;
-    const { showCol } = this.state;
+    const { type } = this.state.popOver.dataset
+    const { menuItem, displayClass } = styles
+    const { showCol } = this.state
     switch (type) {
-      case 'displayCol':
-        const { tableConf } = this.props;
-        const names = pluck('name', tableConf);
+      case "displayCol":
+        const { tableConf } = this.props
+        const names = pluck("name", tableConf)
         return names.map((name, i) => (
           <div className={displayClass} key={i}>
             <Checkbox
@@ -55,25 +59,25 @@ class Table extends Component {
             />
             {name}
           </div>
-        ));
+        ))
 
-      case 'order':
+      case "order":
         return (
           <div>
             <div
               className={menuItem}
-              onClick={() => this.updateFilter({ sort: 'DESC' })}>
+              onClick={() => this.updateFilter({ sort: "DESC" })}>
               Date: Newest to oldest
             </div>
             <div
               className={menuItem}
-              onClick={() => this.updateFilter({ sort: 'ASC' })}>
+              onClick={() => this.updateFilter({ sort: "ASC" })}>
               Date: Oldest to newest
             </div>
           </div>
-        );
+        )
 
-      case 'limit':
+      case "limit":
         return (
           <div>
             {[5, 10, 15, 20, 25, 50, 100].map((num, key) => (
@@ -85,82 +89,83 @@ class Table extends Component {
               </div>
             ))}
           </div>
-        );
+        )
 
       default:
-        break;
+        break
     }
-  };
+  }
+
   /********************************* render(x,y) Table Item ************************************/
   renderXYItem = (item, index = 0) => {
-    const { exportClass } = styles;
-    const { showCol } = this.state;
-    const tableConf = this.props.tableConf.filter((e, i) => showCol[i]);
-    const itemInfo = tableConf[index];
-    const type = itemInfo.type;
+    const { exportClass } = styles
+    const { showCol } = this.state
+    const tableConf = this.props.tableConf.filter((e, i) => showCol[i])
+    const itemInfo = tableConf[index]
+    const type = itemInfo.type
     switch (type) {
-      case 'text':
-        return item;
-      case 'date':
-        // if Date = 1122334455 then is total row
-        if (item === 1122334455) return 'Total';
-        else return format(item, 'MMM Do YYYY');
-      case 'renderer':
-        return itemInfo.renderer(item);
+      case "text":
+        return item
+      case "date":
+        // if Date = 1122334455 then is total row  FIX ME!!!!!!!!!!!!!
+        if (item === 1122334455) return "Total"
+        else return format(item, "MMM Do YYYY")
+      case "renderer":
+        return itemInfo.renderer(item)
 
-      case 'file':
-        return <img className={exportClass} src="/images/export.svg" alt="" />;
+      case "file":
+        return <img className={exportClass} src="/images/export.svg" alt="" />
       default:
-        return item;
+        return item
     }
-  };
+  }
 
   /************************ Toggle PopOver for various elems ***********************************/
-  toogglePopOver = (evt) => {
-    const { popOver } = this.state;
+  toogglePopOver = evt => {
+    const { popOver } = this.state
     popOver
       ? this.setState({ popOver: null })
-      : this.setState({ popOver: evt.target });
-  };
+      : this.setState({ popOver: evt.target })
+  }
 
   /*********************** Close popOver and update Filters ************************************/
-  updateFilter = (obj) => {
-    const { updateFilters } = this.props;
-    this.setState({ popOver: null });
-    updateFilters(obj);
-  };
+  updateFilter = obj => {
+    const { updateFilters } = this.props
+    this.setState({ popOver: null })
+    updateFilters(obj)
+  }
 
   /************************************** Filter table col *************************************/
-  toggleCol = (evt) => {
-    const index = parseInt(evt.target.id.slice(-1), 10);
-    const { showCol } = this.state;
-    showCol.splice(index, 1, !showCol[index]);
-    this.setState({ showCol });
-  };
+  toggleCol = evt => {
+    const index = parseInt(evt.target.id.slice(-1), 10)
+    const { showCol } = this.state
+    showCol.splice(index, 1, !showCol[index])
+    this.setState({ showCol })
+  }
 
-  changeOffset = (direction) => {
-    const { updateFilters, total } = this.props;
-    const { offset, limit } = this.props.filters;
-    const maxPages = limit > total ? 1 : Math.ceil(total / limit);
-    const currentPage = offset / limit;
-    const newOffset = currentPage + direction;
-    const isValid = newOffset > -1 && newOffset < maxPages;
-    if (isValid) updateFilters({ offset: newOffset * limit });
-  };
+  changeOffset = direction => {
+    const { updateFilters, total } = this.props
+    const { offset, limit } = this.props.filters
+    const maxPages = limit > total ? 1 : Math.ceil(total / limit)
+    const currentPage = offset / limit
+    const newOffset = currentPage + direction
+    const isValid = newOffset > -1 && newOffset < maxPages
+    if (isValid) updateFilters({ offset: newOffset * limit })
+  }
 
   render() {
-    const { data, loading, total = 0 } = this.props;
-    const { sort, limit, offset } = this.props.filters;
-    const { popOver, showCol } = this.state;
-    const tableConf = this.props.tableConf.filter((e, i) => showCol[i]);
-    const names = pluck('name', tableConf);
-    const keys = pluck('key', tableConf);
-    const currentPage = offset / limit;
-    const maxPages = limit > total ? 1 : Math.ceil(total / limit);
+    const { data, loading, total = 0 } = this.props
+    const { sort, limit, offset } = this.props.filters
+    const { popOver, showCol } = this.state
+    const tableConf = this.props.tableConf.filter((e, i) => showCol[i])
+    const names = pluck("name", tableConf)
+    const keys = pluck("key", tableConf)
+    const currentPage = offset / limit
+    const maxPages = limit > total ? 1 : Math.ceil(total / limit)
     const orderText =
       sort && sort.match(/ASC/g)
         ? `Date Oldest to Newest`
-        : `Date Newest to Oldest`;
+        : `Date Newest to Oldest`
     const {
       container,
       rowClass,
@@ -172,8 +177,8 @@ class Table extends Component {
       offsetArrow,
       upperFilters,
       offsetCont,
-      footFiltersCont,
-    } = styles;
+      footFiltersCont
+    } = styles
 
     return (
       <div className={container}>
@@ -235,9 +240,9 @@ class Table extends Component {
             <div className={offsetCont}>
               <div
                 onClick={() => this.changeOffset(-1)}
-                className={`${offsetArrow} ${currentPage === 0
-                  ? 'disable'
-                  : ''}`}>
+                className={`${offsetArrow} ${
+                  currentPage === 0 ? "disable" : ""
+                }`}>
                 ❮
               </div>
               <div>
@@ -245,9 +250,9 @@ class Table extends Component {
               </div>
               <div
                 onClick={() => this.changeOffset(1)}
-                className={`${offsetArrow} ${currentPage + 1 === maxPages
-                  ? 'disable'
-                  : ''}`}>
+                className={`${offsetArrow} ${
+                  currentPage + 1 === maxPages ? "disable" : ""
+                }`}>
                 ❯
               </div>
             </div>
@@ -259,15 +264,15 @@ class Table extends Component {
           open={Boolean(popOver)}
           anchorEl={popOver}
           anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'left',
+            vertical: "bottom",
+            horizontal: "left"
           }}
           onClose={this.toogglePopOver}>
           {popOver && this.popOverContent()}
         </Popover>
       </div>
-    );
+    )
   }
 }
 
-export default Table;
+export default Table

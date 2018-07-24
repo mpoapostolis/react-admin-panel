@@ -1,4 +1,4 @@
-import {css} from 'emotion';
+import { css } from "emotion"
 
 export const input = css`
   border: none;
@@ -27,18 +27,18 @@ export const input = css`
     color: red;
     border-bottom: solid 0.08em #ff0000;
   }
-`;
+`
 
 export const mpla = css`
   display: flex;
   justify-content: space-around;
-`;
+`
 
 export const hide = css`
   max-width: 20px;
   max-height: 20px;
   cursor: pointer;
-`;
+`
 
 export const inputCont = css`
   display: inline-flex;
@@ -59,8 +59,8 @@ export const inputCont = css`
       font-size: xx-small;
     }
   }
-`;
+`
 
 export const hideIcon = css`
-  cursor:pointer
+  cursor: pointer;
 `

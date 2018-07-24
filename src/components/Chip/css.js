@@ -1,4 +1,4 @@
-import {css} from 'emotion';
+import { css } from "emotion"
 
 export const chipCont = css`
   display: flex;
@@ -14,7 +14,7 @@ export const chipCont = css`
   border-radius: 2px;
   background: #333333;
   color: white;
-`;
+`
 
 export const btn = css`
   background: #333333;
@@ -25,8 +25,8 @@ export const btn = css`
   font-weight: 600;
   outline: none;
   &:after {
-    content: 'x';
+    content: "x";
     color: white;
     font-weight: 600;
   }
-`;
+`

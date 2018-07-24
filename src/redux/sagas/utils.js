@@ -5,12 +5,11 @@
  */
 
 export const makeQueries = (filters, keys) => {
-  let str = '';
+  let str = ""
   keys.forEach(key => {
-    
-    str += filters[key] !== void 0 ? `&${key}=${filters[key]}` : '';
-  });
+    str += filters[key] !== void 0 ? `&${key}=${filters[key]}` : ""
+  })
   // replace the first &  to ?  www.example.com?param1=1&param2=2
-  str = str.replace(/&/, '?');
-  return str;
-};
+  str = str.replace(/&/, "?")
+  return str
+}

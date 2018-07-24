@@ -1,3 +1,3 @@
-import {groupedPerms, menuItems} from './permissions';
+import { groupedPerms, menuItems } from "./permissions"
 
-export {groupedPerms, menuItems};
+export { groupedPerms, menuItems }

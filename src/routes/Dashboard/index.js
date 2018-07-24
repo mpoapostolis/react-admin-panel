@@ -1,13 +1,13 @@
 // @ts-check
 
-import React, { Component } from 'react';
-import * as styles from './css';
+import React, { Component } from "react"
+import * as styles from "./css"
 
 class Home extends Component {
   componentDidMount() {}
 
   render() {
-    const { container } = styles;
+    const { container } = styles
     const {
       headInfo,
       topPerfomCampain,
@@ -15,13 +15,10 @@ class Home extends Component {
       scratchAndWinChart,
       runningContest,
       contestReport,
-      layout,
-    } = styles;
+      layout
+    } = styles
     return (
       <div className={container}>
-        <div>
-          <h1>TEST</h1>
-        </div>
         <div className={layout}>
           <div className={headInfo}>1</div>
           <div className={topPerfomCampain}>2</div>
@@ -33,8 +30,8 @@ class Home extends Component {
           <div className={contestReport}>61</div>
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default Home;
+export default Home

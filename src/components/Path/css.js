@@ -1,4 +1,4 @@
-import {css} from 'emotion';
+import { css } from "emotion"
 
 export const container = css`
   display: flex;
@@ -9,11 +9,11 @@ export const container = css`
     margin-right: 2px;
     color: #008fd8;
     ::after {
-      content: '/';
+      content: "/";
     }
     &:last-child {
       user-select: auto;
-      color: #000000;
+      color: #9e9c9c;
       cursor: text;
       ::after {
         content: none;
@@ -28,4 +28,4 @@ export const container = css`
       }
     }
   }
-`;
+`

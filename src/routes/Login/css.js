@@ -1,15 +1,15 @@
-import {css} from 'emotion';
+import { css } from "emotion"
 
 export const container = css`
   color: #fff;
   height: 100vh;
   width: 100vw;
-  background: black url('/images/bg_login.jpg') no-repeat 0 -1%;
+  background: black url("/images/bg_login.jpg") no-repeat 0 -1%;
   background-size: 100% 49%;
   display: flex;
   justify-content: center;
   align-items: center;
-`;
+`
 
 export const boxContainer = css`
   padding: 15px;
@@ -22,20 +22,20 @@ export const boxContainer = css`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
+`
 
 export const logo = css`
   width: 30vw;
   display: flex;
   flex-direction: center;
   max-width: 200px;
-`;
+`
 
 export const item = css`
   width: 100%;
   display: flex;
   justify-content: center;
-`;
+`
 
 export const input = css`
   color: rgba(255, 255, 255, 0.8) !important;
@@ -47,7 +47,7 @@ export const input = css`
   &:focus {
     border-bottom: solid 0.1em rgb(255, 255, 255, 0.8) !important;
   }
-`;
+`
 
 export const formClass = css`
   display: flex;
@@ -55,11 +55,11 @@ export const formClass = css`
   flex-direction: column;
   justify-content: space-around;
   width: 85%;
-`;
+`
 
 export const labelClass = css`
   color: #fffa !important;
-`;
+`
 
 export const errorStyle = css`
   font-family: serif;
@@ -67,4 +67,4 @@ export const errorStyle = css`
   text-align: center;
   font-size: 16px;
   color: rgb(255, 45, 45);
-`;
+`

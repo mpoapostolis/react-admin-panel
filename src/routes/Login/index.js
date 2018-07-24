@@ -1,25 +1,25 @@
-import React, {Component} from 'react';
-import * as styles from './css';
-import actions from '../../redux/actions';
-import TextField from '../../components/TextField';
-import Button from 'material-ui/Button';
-import {bindActionCreators} from 'redux';
-import {connect} from 'react-redux';
+import React, { Component } from "react"
+import * as styles from "./css"
+import actions from "../../redux/actions"
+import TextField from "../../components/TextField"
+import Button from "@material-ui/core/Button"
+import { bindActionCreators } from "redux"
+import { connect } from "react-redux"
 
 const btnStyle = {
-  backgroundColor: '#008bcc',
-  padding: '10px',
-  fontWeight: '600',
-};
+  backgroundColor: "#008bcc",
+  padding: "10px",
+  fontWeight: "600"
+}
 
 class Login extends Component {
   componentWillUnmount() {
-    this.props.clearFormData();
+    this.props.clearFormData()
   }
 
   handleSubmit = () => {
-    this.props.login();
-  };
+    this.props.login()
+  }
 
   render() {
     const {
@@ -30,19 +30,19 @@ class Login extends Component {
       input,
       formClass,
       labelClass,
-      errorStyle,
-    } = styles;
-    const {setFormData} = this.props;
-    const {error} = this.props.ui;
+      errorStyle
+    } = styles
+    const { setFormData } = this.props
+    const { error } = this.props.ui
 
     const schema = [
-      {field: 'username', label: 'Username'},
+      { field: "username", label: "Username" },
       {
-        field: 'password',
-        label: 'Password',
-        type: 'password',
-      },
-    ];
+        field: "password",
+        label: "Password",
+        type: "password"
+      }
+    ]
     return (
       <div className={container}>
         <div className={boxContainer}>
@@ -77,14 +77,14 @@ class Login extends Component {
           )}
         </div>
       </div>
-    );
+    )
   }
 }
 
 function mapStateToProps(state) {
   return {
-    ui: state.ui,
-  };
+    ui: state.ui
+  }
 }
 
 function mapDispatchToProps(dispatch) {
@@ -92,10 +92,13 @@ function mapDispatchToProps(dispatch) {
     {
       clearFormData: actions.clearFormData,
       setFormData: actions.setFormData,
-      login: actions.login,
+      login: actions.login
     },
     dispatch
-  );
+  )
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Login)
