@@ -28,7 +28,7 @@ const perms = [
     viewOnMenu: true,
     path: ["users", "new-user"],
     group: "Users",
-    section: "People"
+    section: "Peoples"
   },
 
   {
@@ -39,7 +39,7 @@ const perms = [
     viewOnMenu: true,
     path: ["reports"],
     group: "Reports",
-    section: "Contests"
+    section: "Analytics"
   },
   {
     name: "Reports Export",

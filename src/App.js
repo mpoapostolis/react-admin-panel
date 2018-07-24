@@ -1,5 +1,5 @@
-import React, { Component } from "react"
-import { BrowserRouter, Switch, Route } from "react-router-dom"
+import React from "react"
+import { BrowserRouter, Redirect, Switch, Route } from "react-router-dom"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
 import actions from "./redux/actions"
@@ -7,22 +7,41 @@ import "./App.css"
 import Login from "./routes/Login"
 import Layout from "./layout"
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <BrowserRouter>
-          <Switch>
-            <Route
-              path="/login"
-              render={routeProps => <Login {...routeProps} />}
-            />
-            <Route path="/" render={routeProps => <Layout {...routeProps} />} />
-          </Switch>
-        </BrowserRouter>
-      </div>
-    )
-  }
+function App(props) {
+  const {
+    auth: { access_token }
+  } = props
+
+  const Component = access_token ? Layout : Login
+
+  return (
+    <div className="App">
+      <BrowserRouter>
+        <Switch>
+          <Route
+            path="/login"
+            render={routeProps =>
+              access_token ? (
+                <Redirect to={{ pathname: "/" }} />
+              ) : (
+                <Login {...routeProps} />
+              )
+            }
+          />
+          <Route
+            path="/"
+            render={routeProps =>
+              access_token ? (
+                <Layout {...routeProps} />
+              ) : (
+                <Redirect to={{ pathname: "/login" }} />
+              )
+            }
+          />
+        </Switch>
+      </BrowserRouter>
+    </div>
+  )
 }
 
 function mapStateToProps(state) {

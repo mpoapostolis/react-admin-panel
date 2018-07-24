@@ -3,7 +3,7 @@ import { put, take, takeLatest, call, select } from "redux-saga/effects"
 import * as names from "../actions/names"
 import actions from "../actions"
 
-const URL = "/api/auth/oauth/token"
+const URL = "/api/login"
 const getAuth = state => state.auth
 const getFormData = state => state.ui.formData
 
@@ -57,10 +57,7 @@ const getAccountInfos = accountInfo => {
   const decodedRToken = parseJwt(accountInfo.refresh_token)
   const tokenExp = decodedToken.exp * 1000
   const refrershTokenExp = decodedRToken.exp * 1000
-  const role = accountInfo.authorities
-    .find(e => e.match(/ROLE/i))
-    .replace("ROLE_", "")
-    .toLowerCase()
+  const role = accountInfo.role
   const tmpObj = {
     role,
     name: decodedToken.user_name,

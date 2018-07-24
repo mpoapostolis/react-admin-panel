@@ -20,6 +20,7 @@ class Layout extends Component {
   render() {
     const isActive = this.state.active ? "active" : ""
     const { auth, history } = this.props
+    const { access_token } = auth
     return (
       <div className={`${layout}  ${isActive}`}>
         <div className={header}>
