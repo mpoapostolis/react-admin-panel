@@ -13,7 +13,6 @@ class Menu extends Component {
 
   handlePath = ({ currentTarget }) => {
     const { push } = this.props
-    // normalize URL
     const path = currentTarget.getAttribute("path").replace(/\/\//g, "/")
     push(path)
   }

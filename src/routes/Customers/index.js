@@ -1,6 +1,5 @@
 import React, { Component } from "react"
 import { Switch, Route } from "react-router-dom"
-import Table from "../../components/Table"
 
 class Customers extends Component {
   render() {

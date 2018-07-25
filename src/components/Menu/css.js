@@ -43,7 +43,7 @@ export const dl = css`
   color: #9b9b9b;
   padding-left: 10px;
   font-size: small;
-  border-bottom: solid 1px #ffffff3f;
+  border-bottom: solid 1px #fff3;
   &:last-child {
     border: none;
   }

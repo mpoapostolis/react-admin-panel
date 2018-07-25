@@ -4,7 +4,6 @@ import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
 import { container } from "./css"
 import actions from "./redux/actions"
-import "./App.css"
 import Login from "./routes/Login"
 import Layout from "./layout"
 
@@ -12,8 +11,6 @@ function App(props) {
   const {
     auth: { access_token }
   } = props
-
-  const Component = access_token ? Layout : Login
 
   return (
     <div className={container}>
