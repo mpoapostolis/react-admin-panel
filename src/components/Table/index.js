@@ -159,6 +159,7 @@ class Table extends Component {
     const { popOver, showCol } = this.state
     const tableConf = this.props.tableConf.filter((e, i) => showCol[i])
     const names = pluck("name", tableConf)
+
     const keys = pluck("key", tableConf)
     const currentPage = offset / limit
     const maxPages = limit > total ? 1 : Math.ceil(total / limit)

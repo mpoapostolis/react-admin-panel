@@ -65,8 +65,6 @@ const perms = [
 const filteredPerms = perms.filter(({ group }) => group)
 
 const groupedPerms = groupBy(({ group }) => group, filteredPerms)
-// const allPerms = pluck('permissions', perms);
-// console.log(allPerms)
 const menuItems = groupBy(
   ({ section }) => section,
   perms.filter(({ viewOnMenu }) => viewOnMenu)

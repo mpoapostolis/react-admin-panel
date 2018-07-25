@@ -4,26 +4,27 @@ import { mq } from "../css"
 export const layout = css`
   display: grid;
   overflow-x: hidden;
-  width: 100vw;
   height: 100vh;
   grid-template-areas:
-    "sidebar header header header" "sidebar main main main"
-    "sidebar main main main" "sidebar main main main";
-  grid-template-columns: 0px repeat(3, 1fr);
-  &.active {
-    grid-template-columns: 175px repeat(3, 1fr);
-  }
+    "sidebar header header header"
+    "sidebar main main main"
+    "sidebar main main main"
+    "sidebar main main main";
+  grid-template-columns: 205px repeat(3, 1fr);
   grid-template-rows: 60px repeat(3, 1fr);
+  transition: 0.25s;
+  width: calc(100vw + 205px);
+  transform: translateX(-205px);
+  &.active {
+    transform: translateX(0);
+    width: 100vw;
+  }
 `
 
 export const sidebar = css`
   position: sticky;
   background: black;
   grid-area: sidebar;
-  transform: translateX(-205px);
-  &.active {
-    transform: translateX(0px);
-  }
 `
 
 export const header = css`

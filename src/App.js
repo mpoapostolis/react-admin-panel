@@ -2,6 +2,7 @@ import React from "react"
 import { BrowserRouter, Redirect, Switch, Route } from "react-router-dom"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
+import { container } from "./css"
 import actions from "./redux/actions"
 import "./App.css"
 import Login from "./routes/Login"
@@ -15,7 +16,7 @@ function App(props) {
   const Component = access_token ? Layout : Login
 
   return (
-    <div className="App">
+    <div className={container}>
       <BrowserRouter>
         <Switch>
           <Route

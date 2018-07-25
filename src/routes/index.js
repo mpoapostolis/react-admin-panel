@@ -38,7 +38,6 @@ for (const key in menuItems) {
 
 function Routes(props) {
   return routes.map((obj, key) => {
-    console.log(obj)
     const Component = mapPathToComponents(obj.path[0])
     return (
       <Route

@@ -8,6 +8,7 @@ import MenuIcon from "@material-ui/icons/Menu"
 import Account from "@material-ui/icons/AccountCircle"
 import Badge from "@material-ui/core/Badge"
 import Notifications from "@material-ui/icons/NotificationsOutlined"
+import InvertColor from "@material-ui/icons/InvertColors"
 
 const styles = theme => ({
   appBar: {
@@ -60,6 +61,10 @@ class ButtonAppBar extends Component {
             <MenuIcon />
           </IconButton>
           <div className={classes.info}>
+            <IconButton>
+              <InvertColor />
+            </IconButton>
+
             <IconButton>
               <Badge
                 className={classes.margin}

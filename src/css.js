@@ -1,4 +1,7 @@
 import { css } from "emotion"
+
+export const container = css``
+
 const breakpoints = {
   // Numerical values will result in a min-width query
   small: 576,

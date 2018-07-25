@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import { menuItems } from "../../utils"
 import keys from "ramda/src/keys"
-import { dl, dd, logo } from "./css"
+import { dl, dd, logo, imageCont, avatarInfo, avatar } from "./css"
 
 class Menu extends Component {
   isActive = pathArr => {
@@ -52,6 +52,12 @@ class Menu extends Component {
           src="/images/logo.png"
           alt="logo"
         />
+        <div className={imageCont}>
+          <img className={avatar} src="/images/img_avatar.png" alt=":)" />
+          <div className={avatarInfo}>
+            Admin <i>▼</i>
+          </div>
+        </div>
         {sections.map((section, key) => this.renMenuItems(section, key))}
       </div>
     )
