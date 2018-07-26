@@ -9,7 +9,6 @@ import Account from "@material-ui/icons/AccountCircle"
 import Badge from "@material-ui/core/Badge"
 import Notifications from "@material-ui/icons/NotificationsOutlined"
 import InvertColor from "@material-ui/icons/InvertColors"
-import PopOver from "../PopOver"
 
 const styles = theme => ({
   appBar: {
@@ -34,12 +33,13 @@ const styles = theme => ({
 class ButtonAppBar extends Component {
   state = { active: false }
   setActive = () => this.setState({ active: !this.state.active })
+  handleClose = () => this.setState({ active: false })
+  setNode = node => (this.node = node)
 
   render() {
     const { classes, toggleMenu } = this.props
     // const role = "Admin"
     // const name = "Admin"
-    const { active } = this.state
     return (
       <AppBar className={classes.appBar} position="static">
         <Toolbar className={classes.Toolbar}>
@@ -47,15 +47,8 @@ class ButtonAppBar extends Component {
             <MenuIcon />
           </IconButton>
           <div className={classes.info}>
-            <IconButton onClick={this.setActive}>
-              <InvertColor />
-              <PopOver active={active}>
-                <h1>header1</h1>
-                <h1>header2</h1>
-                <h1>header3</h1>
-                <h1>header4</h1>
-                <h1>header5</h1>
-              </PopOver>
+            <IconButton ref={this.setNode} onClick={this.setActive}>
+              <InvertColor ref={node => console.log(node)} />
             </IconButton>
 
             <IconButton>

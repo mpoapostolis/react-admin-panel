@@ -38,6 +38,11 @@ export const avatar = css`
   height: 100px;
 `
 
+export const textInfo = css`
+  width: 200px;
+  text-align: center;
+`
+
 export const dl = css`
   width: 100%;
   color: #9b9b9b;

@@ -7,6 +7,7 @@ import Menu from "../components/Menu"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
 import Path from "../components/Path"
+import Button from "../components/Button"
 
 class Layout extends Component {
   state = {
@@ -31,6 +32,7 @@ class Layout extends Component {
 
         <main className={main}>
           <Path {...this.props} />
+          <Button>yo</Button>
           <Router {...history} />
         </main>
       </div>

@@ -1,9 +1,14 @@
 import React, { Component } from "react"
 import { menuItems } from "../../utils"
 import keys from "ramda/src/keys"
-import { dl, dd, logo, imageCont, avatarInfo, avatar } from "./css"
+import PopOver from "../../components/PopOver"
+import { dl, dd, logo, imageCont, avatarInfo, avatar, textInfo } from "./css"
 
 class Menu extends Component {
+  state = {
+    active: false
+  }
+
   isActive = pathArr => {
     const urlPath = window.location.pathname
     const isHome = urlPath === "/"
@@ -15,6 +20,15 @@ class Menu extends Component {
     const { push } = this.props
     const path = currentTarget.getAttribute("path").replace(/\/\//g, "/")
     push(path)
+  }
+
+  handlePopUp = () => {
+    const { active } = this.state
+    this.setState({ active: !active })
+  }
+
+  handleClose = () => {
+    this.setState({ active: false })
   }
 
   renMenuItems = (section, outKey) => {
@@ -41,8 +55,14 @@ class Menu extends Component {
     )
   }
 
+  setNode = node => {
+    this.node = node
+  }
+
   render() {
     const sections = keys(menuItems)
+    const { active } = this.state
+    const { node } = this
     return (
       <div>
         <img
@@ -54,7 +74,12 @@ class Menu extends Component {
         <div className={imageCont}>
           <img className={avatar} src="/images/img_avatar.png" alt=":)" />
           <div className={avatarInfo}>
-            Admin <i>▼</i>
+            <div
+              ref={this.setNode}
+              className={textInfo}
+              onClick={this.handlePopUp}>
+              Admin
+            </div>
           </div>
         </div>
         {sections.map((section, key) => this.renMenuItems(section, key))}
