@@ -1,37 +1,45 @@
-// @ts-check
-
 import React, { Component } from "react"
-import * as styles from "./css"
+import Filters from "./components/Filters"
+import { connect } from "react-redux"
+import { bindActionCreators } from "redux"
 
-class Home extends Component {
-  componentDidMount() {}
+import {
+  container,
+  headFilterCont,
+} from "./css"
+
+class DashBoard extends Component {
+  state = { type: "daily" }
+
+  handleType = ({ currentTarget }) => {
+    const type = currentTarget.getAttribute("type")
+    this.setState({ type })
+  }
 
   render() {
-    const { container } = styles
-    const {
-      headInfo,
-      topPerfomCampain,
-      flameChart,
-      scratchAndWinChart,
-      runningContest,
-      contestReport,
-      layout
-    } = styles
+    const { name } = this.props
+    const { type } = this.state
     return (
       <div className={container}>
-        <div className={layout}>
-          <div className={headInfo}>1</div>
-          <div className={topPerfomCampain}>2</div>
-
-          <div className={flameChart}>13</div>
-          <div className={scratchAndWinChart}>14</div>
-
-          <div className={runningContest}>15</div>
-          <div className={contestReport}>61</div>
+        <div className={headFilterCont}>
+          <Filters name={name} activeType={type} handleType={this.handleType} />
         </div>
       </div>
     )
   }
 }
 
-export default Home
+function mapStateToProps(state) {
+  return {
+    name: state.auth.name
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({}, dispatch)
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(DashBoard)

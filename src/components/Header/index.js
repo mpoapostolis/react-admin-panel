@@ -5,10 +5,8 @@ import AppBar from "@material-ui/core/AppBar"
 import Toolbar from "@material-ui/core/Toolbar"
 import IconButton from "@material-ui/core/IconButton"
 import MenuIcon from "@material-ui/icons/Menu"
-import Account from "@material-ui/icons/AccountCircle"
-import Badge from "@material-ui/core/Badge"
-import Notifications from "@material-ui/icons/NotificationsOutlined"
-import InvertColor from "@material-ui/icons/InvertColors"
+import Avatar from "@material-ui/core/Avatar"
+import PopOver from "./PopOver"
 
 const styles = theme => ({
   appBar: {
@@ -20,24 +18,27 @@ const styles = theme => ({
     justifyContent: "space-between",
     backgroundColor: "#FFF",
     color: "#000"
-  },
-  margin: {
-    margin: theme.spacing.unit * 2,
-    color: "#0000009F"
-  },
-  info: {
-    display: "flex"
   }
 })
 
 class ButtonAppBar extends Component {
-  state = { active: false }
-  setActive = () => this.setState({ active: !this.state.active })
-  handleClose = () => this.setState({ active: false })
+  state = {
+    anchorEl: null
+  }
+
   setNode = node => (this.node = node)
 
+  handleClick = ({ currentTarget }) => {
+    this.setState({ anchorEl: currentTarget })
+  }
+
+  handleClose = () => {
+    this.setState({ anchorEl: null })
+  }
+
   render() {
-    const { classes, toggleMenu } = this.props
+    const { classes, toggleMenu, imgUrl } = this.props
+    const { anchorEl } = this.state
     // const role = "Admin"
     // const name = "Admin"
     return (
@@ -47,26 +48,19 @@ class ButtonAppBar extends Component {
             <MenuIcon />
           </IconButton>
           <div className={classes.info}>
-            <IconButton ref={this.setNode} onClick={this.setActive}>
-              <InvertColor ref={node => console.log(node)} />
-            </IconButton>
-
-            <IconButton>
-              <Badge
-                className={classes.margin}
-                badgeContent={4}
-                color="secondary">
-                <Notifications />
-              </Badge>
-            </IconButton>
             <IconButton
-              ref={this.setRef}
+              ref={this.setNode}
               onClick={this.handleClick}
               className={classes.account}>
-              <Account />
+              <Avatar src={imgUrl} />
             </IconButton>
           </div>
         </Toolbar>
+        <PopOver
+          anchorEl={anchorEl}
+          {...this.props}
+          handleClose={this.handleClose}
+        />
       </AppBar>
     )
   }

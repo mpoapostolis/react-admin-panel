@@ -25,6 +25,7 @@ export const sidebar = css`
   position: sticky;
   background: black;
   grid-area: sidebar;
+  box-shadow: 0 2px 3px 3px #0007;
 `
 
 export const header = css`

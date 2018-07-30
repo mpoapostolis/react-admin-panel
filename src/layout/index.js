@@ -7,7 +7,6 @@ import Menu from "../components/Menu"
 import { connect } from "react-redux"
 import { bindActionCreators } from "redux"
 import Path from "../components/Path"
-import Button from "../components/Button"
 
 class Layout extends Component {
   state = {
@@ -20,19 +19,19 @@ class Layout extends Component {
 
   render() {
     const isActive = this.state.active ? "active" : ""
-    const { auth, history } = this.props
+    const { auth, history, logout } = this.props
     return (
       <div className={`${layout}  ${isActive}`}>
         <div className={header}>
-          <Header toggleMenu={this.setMenuActive} />
+          <Header {...auth} logout={logout} toggleMenu={this.setMenuActive} />
         </div>
+
         <aside className={`${sidebar} ${isActive}`}>
           <Menu {...auth} {...history} />
         </aside>
 
         <main className={main}>
           <Path {...this.props} />
-          <Button>yo</Button>
           <Router {...history} />
         </main>
       </div>
