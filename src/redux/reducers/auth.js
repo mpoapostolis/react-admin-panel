@@ -5,8 +5,9 @@ const initAccount = {
   refresh_token: "",
   expires_in: 0,
   role: "cc",
+  imgUrl: "/images/img_avatar.png",
   status: "ACTIVE",
-  authorities: ["UV"]
+  authorities: ["USR", "PRV", "USR", "RER", "REX", "CUR"]
 }
 
 export const auth = (state = initAccount, { type, payload }) => {
