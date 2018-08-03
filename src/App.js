@@ -19,14 +19,23 @@ function App(props) {
           <Route
             path="/login"
             render={routeProps =>
-              true ? (
+              access_token ? (
                 <Redirect to={{ pathname: "/" }} />
               ) : (
                 <Login {...routeProps} />
               )
             }
           />
-          <Route path="/" render={routeProps => <Layout {...routeProps} />} />
+          <Route
+            path="/"
+            render={routeProps =>
+              !access_token ? (
+                <Redirect to={{ pathname: "/login" }} />
+              ) : (
+                <Layout {...routeProps} />
+              )
+            }
+          />
         </Switch>
       </BrowserRouter>
     </div>

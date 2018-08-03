@@ -8,7 +8,9 @@ function Path(props) {
   return (
     <div className={container}>
       <p onClick={() => push("/")}>Dashboard </p>
-      {paths.map((e, key) => <p key={key}>{decodeURI(e)}</p>)}
+      {paths.map((e, key) => (
+        <p key={key}>{decodeURI(e)}</p>
+      ))}
     </div>
   )
 }

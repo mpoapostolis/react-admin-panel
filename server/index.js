@@ -19,6 +19,7 @@ app.post("/api/login", urlencodedParser, (req, res) => {
   res.send({
     access_token,
     refresh_token,
+    imgUrl: "/images/img_avatar.png",
     role: "admin",
     status: "ACTIVE",
     authorities: ["USR", "PRV", "USR", "RER", "REX", "CUR"]

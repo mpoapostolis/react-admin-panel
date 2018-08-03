@@ -1,8 +1,8 @@
 import { createAction } from "redux-actions"
-import * as names from "./names"
+import { UPDATE_FILTERS, CLEAR_FILTERS } from "./names"
 
-const updateFilters = createAction(names.UPDATE_FILTERS)
-const clearFilters = createAction(names.CLEAR_FILTERS)
+const updateFilters = createAction(UPDATE_FILTERS)
+const clearFilters = createAction(CLEAR_FILTERS)
 
 export default {
   updateFilters,

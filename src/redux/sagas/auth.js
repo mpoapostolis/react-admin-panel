@@ -5,7 +5,6 @@ import actions from "../actions"
 
 const URL = "/api/login"
 const getAuth = state => state.auth
-const getFormData = state => state.ui.formData
 
 /******************************************************************************/
 /** extract infos from Token **/
@@ -42,7 +41,7 @@ function* apiCall(body, action) {
     if ("error" in accountInfos) throw new { ...accountInfos }()
     const data = getAccountInfos(accountInfos)
     yield put(actions.updateAccount(data))
-    yield put({ type: "ALL" }) // REMOVE ME!!!!!
+    // yield put({ type: "ALL" }) // REMOVE ME!!!!!
     yield put(actions.loginSuccess())
   } catch (error) {
     yield put(actions.setErrorTrue(error))
@@ -83,14 +82,13 @@ export function* setTimerForRefreshToken() {
 /******************************************************************************/
 /** construct the object to call the server for login **/
 /******************************************************************************/
-export function* callToLogin() {
-  const { username, password } = yield select(getFormData)
-  if (!username || !password) return
+export function* callToLogin({ payload: { username, password } }) {
+  if (!username || !password) return void 0
   const body = `username=${username}&password=${password}`
   yield apiCall(body)
 }
 
-function* authWatcher(action) {
+function* authWatcher() {
   yield takeLatest(names.LOGIN, callToLogin)
   const timer1 = yield takeLatest(names.LOGIN_SUCCESS, setTimerForRefreshToken)
   const timer2 = yield takeLatest(

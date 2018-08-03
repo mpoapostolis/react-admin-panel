@@ -1,7 +1,6 @@
 import React, { Component } from "react"
 import { menuItems } from "../../utils"
 import keys from "ramda/src/keys"
-import PopOver from "../../components/PopOver"
 import { dl, dd, logo, imageCont, avatarInfo, avatar, textInfo } from "./css"
 
 class Menu extends Component {
@@ -61,8 +60,7 @@ class Menu extends Component {
 
   render() {
     const sections = keys(menuItems)
-    const { active } = this.state
-    const { node } = this
+    const { name, imgUrl } = this.props
     return (
       <div>
         <img
@@ -72,13 +70,13 @@ class Menu extends Component {
           alt="logo"
         />
         <div className={imageCont}>
-          <img className={avatar} src="/images/img_avatar.png" alt=":)" />
+          <img className={avatar} src={imgUrl} alt=":)" />
           <div className={avatarInfo}>
             <div
               ref={this.setNode}
               className={textInfo}
               onClick={this.handlePopUp}>
-              Admin
+              <b>{name}</b>
             </div>
           </div>
         </div>

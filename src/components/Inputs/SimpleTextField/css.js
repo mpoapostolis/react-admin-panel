@@ -21,17 +21,11 @@ export const input = css`
   }
   &:focus {
     border-bottom: solid 0.1em rgb(0, 0, 0, 0.8);
-    outline: none;
   }
   &.error {
     color: red;
     border-bottom: solid 0.08em #ff0000;
   }
-`
-
-export const mpla = css`
-  display: flex;
-  justify-content: space-around;
 `
 
 export const hide = css`
@@ -43,8 +37,10 @@ export const hide = css`
 export const inputCont = css`
   display: inline-flex;
   align-items: center;
+
   position: relative;
   width: 100%;
+  height: 100%;
   > .inputLabel {
     pointer-events: none;
     font-size: medium;
@@ -53,6 +49,7 @@ export const inputCont = css`
     transition: all 0.15s;
     &.error {
       color: red;
+      font-size: 0.8em;
     }
     &.notEmpty {
       transform: translate(-0px, -25px);

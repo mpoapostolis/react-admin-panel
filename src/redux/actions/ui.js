@@ -1,12 +1,19 @@
 import { createAction } from "redux-actions"
-import * as names from "./names"
+import {
+  SET_LOADING_TRUE,
+  SET_LOADING_FALSE,
+  SET_ERROR_TRUE,
+  SET_ERROR_FALSE,
+  SET_FORM_DATA,
+  CLEAR_FORM_DATA
+} from "./names"
 
-const setLoadingTrue = createAction(names.SET_LOADING_TRUE)
-const setLoadingFalse = createAction(names.SET_LOADING_FALSE)
-const setErrorTrue = createAction(names.SET_ERROR_TRUE)
-const setErrorFalse = createAction(names.SET_ERROR_FALSE)
-const setFormData = createAction(names.SET_FORM_DATA)
-const clearFormData = createAction(names.CLEAR_FORM_DATA)
+const setLoadingTrue = createAction(SET_LOADING_TRUE)
+const setLoadingFalse = createAction(SET_LOADING_FALSE)
+const setErrorTrue = createAction(SET_ERROR_TRUE)
+const setErrorFalse = createAction(SET_ERROR_FALSE)
+const setFormData = createAction(SET_FORM_DATA)
+const clearFormData = createAction(CLEAR_FORM_DATA)
 
 export default {
   setLoadingTrue,

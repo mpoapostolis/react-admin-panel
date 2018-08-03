@@ -229,6 +229,7 @@ class Table extends Component {
             </div>
           ))}
         </SpinnerHOC>
+
         {/********************* Foot Filters **************************************************/}
         <div className={footFiltersCont}>
           <div className={footFilterItems}>

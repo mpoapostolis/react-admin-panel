@@ -24,8 +24,13 @@ export const layout = css`
 export const sidebar = css`
   position: sticky;
   background: black;
+  height: 100%;
   grid-area: sidebar;
   box-shadow: 0 2px 3px 3px #0007;
+  ${mq.small(css`
+    overflow-x: hidden;
+    overflow-y: scroll;
+  `)};
 `
 
 export const header = css`
@@ -42,7 +47,7 @@ export const main = css`
   overflow-y: scroll;
   height: calc(100vh -60px);
   grid-area: main;
-  padding: 10px;
+  padding: 25px;
   background: #f7f7f7;
   ${mq.small(css`
     font-size: xx-small;

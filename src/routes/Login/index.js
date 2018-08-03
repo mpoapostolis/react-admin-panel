@@ -1,7 +1,7 @@
 import React, { Component } from "react"
 import * as styles from "./css"
 import actions from "../../redux/actions"
-import TextField from "../../components/TextField"
+import SimpleTextField from "../../components/Inputs/SimpleTextField"
 import Button from "@material-ui/core/Button"
 import { bindActionCreators } from "redux"
 import { connect } from "react-redux"
@@ -13,13 +13,15 @@ const btnStyle = {
 }
 
 class Login extends Component {
-  componentWillUnmount() {
-    this.props.clearFormData()
-  }
+  state = { username: "", password: "" }
+
+  handleChange = obj => this.setState(obj)
 
   handleSubmit = () => {
-    this.props.login()
+    this.props.login(this.state)
   }
+
+  handleEnter = ({ key }) => (key === "Enter" ? this.handleSubmit() : void 0)
 
   render() {
     const {
@@ -32,13 +34,12 @@ class Login extends Component {
       labelClass,
       errorStyle
     } = styles
-    const { setFormData } = this.props
     const { error } = this.props.ui
 
     const schema = [
-      { field: "username", label: "Username" },
+      { key: "username", label: "Username" },
       {
-        field: "password",
+        key: "password",
         label: "Password",
         type: "password"
       }
@@ -50,11 +51,11 @@ class Login extends Component {
           <form className={formClass} noValidate autoComplete="off">
             {schema.map((obj, key) => (
               <div key={key} className={item}>
-                <TextField
+                <SimpleTextField
                   type={obj.type}
-                  pressEnter={obj.pressEnter}
-                  setFormData={setFormData}
-                  field={obj.field}
+                  handleChange={value =>
+                    this.handleChange({ [obj.key]: value })
+                  }
                   label={obj.label}
                   labelClass={labelClass}
                   extraClass={input}
@@ -90,8 +91,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return bindActionCreators(
     {
-      clearFormData: actions.clearFormData,
-      setFormData: actions.setFormData,
       login: actions.login
     },
     dispatch

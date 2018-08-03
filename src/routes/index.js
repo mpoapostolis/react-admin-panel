@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 import Users from "./Users"
 import Reports from "./Reports"
 import Dashboard from "./Dashboard"
+import Rules from "./Rules"
 import Customers from "./Customers"
 import Error404 from "../components/Error404"
 import { menuItems } from "../utils"
@@ -21,6 +22,9 @@ const mapPathToComponents = path => {
 
     case "customers":
       return Customers
+
+    case "rules":
+      return Rules
 
     default:
       return Error404

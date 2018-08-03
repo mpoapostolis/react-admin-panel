@@ -59,7 +59,19 @@ const perms = [
     path: ["customers"],
     group: "Customers",
     section: "People"
+  },
+  {
+    name: "Rules",
+    permissions: "CUR",
+    description:
+      "Το Lorem Ipsum είναι απλά ένα κείμενο χωρίς νόημα για τους επαγγελματίες ",
+    viewOnMenu: true,
+    path: ["rules"],
+    group: "Rules",
+    section: "Rules"
   }
+
+
 ]
 
 const filteredPerms = perms.filter(({ group }) => group)
