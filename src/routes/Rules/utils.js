@@ -1,4 +1,4 @@
-export const TYPE_OPTS = ["MB", "Seconds", "Min"]
+export const TYPE_OPTS = [...Array(20)].map((_, key) => `rule ${key}`)
 export const VALIDITY_OPTS = [
   ...Array.from(Array(11), (_, i) => i),
   15,

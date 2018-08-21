@@ -58,7 +58,7 @@ const perms = [
     viewOnMenu: true,
     path: ["customers"],
     group: "Customers",
-    section: "People"
+    section: "Peoples"
   },
   {
     name: "Rules",

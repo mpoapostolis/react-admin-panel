@@ -45,7 +45,7 @@ function UpdateCancel({ onSave, type, onCancel }) {
 
 class ScratchAndWind extends Component {
   state = {
-    group1: [{ type: "", amount: "", validity: "" }],
+    group1: [{ type: "", rule: "" }],
     group2: [],
     group3: []
   }
@@ -53,7 +53,7 @@ class ScratchAndWind extends Component {
   handleAddOffer = ({ currentTarget }) =>
     this.setState(s => {
       const type = currentTarget.getAttribute("type")
-      const emptyOffer = { type: "", amount: "", validity: "" }
+      const emptyOffer = { type: "", rule: "" }
       const tmpArr = Array.from(s[type])
       tmpArr.push(emptyOffer)
       return { [type]: tmpArr }
@@ -121,16 +121,16 @@ class ScratchAndWind extends Component {
                     />
                     &nbsp;
                     <Select
-                      currentValue={obj.validity}
+                      currentValue={obj.rule}
                       handleSelect={value =>
                         this.handleChage({
                           value,
-                          type: "validity",
+                          type: "rule",
                           index: colKey,
                           scratchType: type
                         })
                       }
-                      label={"Validity"}
+                      label={"Rule"}
                       options={VALIDITY_OPTS}
                     />
                     &nbsp;

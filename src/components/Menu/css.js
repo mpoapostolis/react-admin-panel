@@ -72,8 +72,8 @@ export const dd = css`
   }
   &.active {
     width: calc(100% - 23px);
-    border-left: solid 3px #ffd700;
-    color: #ffd700;
-    background-color: #fff1;
+    border-left: solid 3px #008fd8;
+    color: #008fd8;
+    background-color: #008fd82f;
   }
 `

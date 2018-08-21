@@ -1,18 +1,30 @@
-import mergeDeepLeft from "ramda/src/mergeDeepLeft"
-import { UPDATE_CUSTOMERS } from "../actions/names"
+import mergeDeepRight from "ramda/src/mergeDeepRight"
+import assoc from "ramda/src/assoc"
+import {
+  UPDATE_CUSTOMERS,
+  CLEAR_CUSTOMERS,
+  SET_CURRENT_CUSTOMER
+} from "../actions/names"
 
-//  Mock
 const initCustomers = {
   data: [],
-  limit: 0,
+  currentCustomer: {},
+  limit: 10,
   offset: 0,
-  total: 0
+  total: 40
 }
 
 export const customers = (state = initCustomers, { type, payload }) => {
   switch (type) {
     case UPDATE_CUSTOMERS:
-      return mergeDeepLeft(payload, state)
+      return mergeDeepRight(state, payload)
+
+    case SET_CURRENT_CUSTOMER:
+      return assoc("currentCustomer", payload, state)
+
+    case CLEAR_CUSTOMERS:
+      return initCustomers
+
     default:
       return state
   }

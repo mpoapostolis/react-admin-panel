@@ -1,36 +1,34 @@
 import { css } from "emotion"
 
 export const tabsCont = css`
-  margin-top: 50px;
   display: flex;
-  justify-content: center;
-  align-items: flex-end;
   width: 100%;
+  justify-content: center;
 `
 
 export const tabs = css`
-  width: 95%;
+  width: 97%;
   display: flex;
   justify-content: flex-start;
-  border-bottom: solid 1px rgba(0, 0, 0, 0.2);
+  border-bottom: solid 1px #0001;
   &.um {
     width: 100%;
   }
 `
-
-export const tabBtn = css`
+export const btn = css`
   width: 100%;
-`
-
-export const tabItem = css`
-  color: rgba(0, 0, 0, 0.45);
-  cursor: pointer;
-  user-select: none;
-  height: 100%;
+  height: 35px;
+  background: white;
+  border: none;
+  outline: none;
+  transition: 0.25s;
+  color: #9e9c9c;
   &.active {
-    color: rgb(156, 42, 160);
+    color: #333333;
     border-bottom: solid 2px #008bcc;
   }
-  font-size: large;
-  width: 15%;
+  &:hover {
+    cursor: pointer;
+    background: #0001;
+  }
 `

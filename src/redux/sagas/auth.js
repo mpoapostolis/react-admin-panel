@@ -2,6 +2,7 @@ import { delay } from "redux-saga"
 import { put, take, takeLatest, call, select } from "redux-saga/effects"
 import * as names from "../actions/names"
 import actions from "../actions"
+import { apiCall } from "./network"
 
 const URL = "/api/login"
 const getAuth = state => state.auth
@@ -25,27 +26,16 @@ export function* logout(timers) {
 /******************************************************************************/
 /** call Server for either login refresh the token **/
 /******************************************************************************/
-function* apiCall(body, action) {
+function* authCall(body, action) {
   const headers = {
     Authorization: "Basic YnJvd3Nlcjo=",
     "Content-Type": "application/x-www-form-urlencoded"
   }
-  try {
-    yield put(actions.fetchStart())
-    const accountInfos = yield fetch(URL, {
-      method: "POST",
-      headers,
-      body
-    }).then(res => res.json())
-    yield put(actions.fetchEnd())
-    if ("error" in accountInfos) throw new { ...accountInfos }()
-    const data = getAccountInfos(accountInfos)
-    yield put(actions.updateAccount(data))
-    // yield put({ type: "ALL" }) // REMOVE ME!!!!!
-    yield put(actions.loginSuccess())
-  } catch (error) {
-    yield put(actions.setErrorTrue(error))
-  }
+  const response = yield apiCall(URL, "POST", headers, body)
+  const accountInfos = yield response.json()
+  const data = getAccountInfos(accountInfos)
+  yield put(actions.updateAccount(data))
+  yield put(actions.loginSuccess())
 }
 
 /******************************************************************************/
@@ -76,7 +66,7 @@ export function* setTimerForRefreshToken() {
   const time = auth.tokenExp - Date.now()
   const body = `grant_type=refresh_token&refresh_token=${auth.refresh_token}`
   yield call(delay, time)
-  yield call(apiCall, body)
+  yield call(authCall, body)
 }
 
 /******************************************************************************/
@@ -85,7 +75,7 @@ export function* setTimerForRefreshToken() {
 export function* callToLogin({ payload: { username, password } }) {
   if (!username || !password) return void 0
   const body = `username=${username}&password=${password}`
-  yield apiCall(body)
+  yield authCall(body)
 }
 
 function* authWatcher() {

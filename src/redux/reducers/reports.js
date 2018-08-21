@@ -11,7 +11,7 @@ const initReports = {
 export const reports = (state = initReports, { type, payload }) => {
   switch (type) {
     case UPDATE_REPORTS:
-      return mergeDeepLeft(payload, state)
+      return mergeDeepLeft(state, payload)
     default:
       return state
   }

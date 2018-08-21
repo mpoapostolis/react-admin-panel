@@ -37,7 +37,11 @@ class ButtonAppBar extends Component {
   }
 
   render() {
-    const { classes, toggleMenu, imgUrl } = this.props
+    const {
+      classes,
+      toggleMenu,
+      imgUrl = "/images/img_avatar.png"
+    } = this.props
     const { anchorEl } = this.state
     // const role = "Admin"
     // const name = "Admin"

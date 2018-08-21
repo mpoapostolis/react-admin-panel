@@ -1,123 +1,62 @@
 import React, { Component } from "react"
-import pluck from "ramda/src/pluck"
-import format from "date-fns/format"
+
+import {
+  footFilterItems,
+  footFiltersCont,
+  offsetCont,
+  offsetArrow,
+  tableFilter,
+  bottomFilters,
+  containers,
+  topFilters,
+  displayClass,
+  table,
+  input,
+  row,
+  col,
+  sortDisplayCont
+} from "./css"
+
 import Popover from "@material-ui/core//Popover"
 import Checkbox from "@material-ui/core//Checkbox"
-import SpinnerHOC from "../SpinnerHOC"
+import Select from "../Select"
 
-import * as styles from "./css"
-/*****************************************************************************************************************************************
- * @param {object[]} tableConf
- * @param {object[]} data
- * @param {function} updateFilters
- * @param {object}   filters
- ****************************************************************************************************************************************/
+const selectFromRows = [1, 2, 3, 4, 5, 10, 15, 20, 25, 50, 100]
+const sortBy = [
+  { name: "Date: Oldest to newest", value: "ASC" },
+  { name: "Date: Newest to oldest", value: "DESC" }
+]
 
-/* 
-tableConf[0] { 
-  name:string, 
-  key:string, 
-  type:string,
-  renderer? = fn -> 'b -> 'a
-   example: 
-         obj.renderer(id) => <Elem>{id}</Elem> 
-      |  obj.rendere([prop1,prop2,prop3]) => <Elem {...b}/> 
-      |  obj.renderer() => <Elem> 
+/**
+ * @param {string} type
+ * @param {function} renderer
+ * @param {string} keyName
+ * @param {Object} obj
+ */
+function Render({ type, renderer, keyName, obj }) {
+  switch (type) {
+    case "renderer":
+      return renderer(obj)
+    default:
+      return keyName ? obj[keyName] : null
+  }
 }
-*/
 
+/**
+ * @prop {number} total
+ * @prop {Object[]} tableConf
+ * @prop {Object[]} data
+ */
 class Table extends Component {
   constructor(props) {
     super(props)
-    const { tableConf } = props
+    const { tableConf = [] } = props
     const state = {
+      popOver: null,
       showCol: new Array(tableConf.length).fill(true),
       tableConf
     }
     this.state = state
-  }
-
-  componentWillUnmount() {
-    this.props.clearFilters()
-  }
-
-  /********************************* Determines what popover will show  **********************************/
-  popOverContent = () => {
-    const { type } = this.state.popOver.dataset
-    const { menuItem, displayClass } = styles
-    const { showCol } = this.state
-    switch (type) {
-      case "displayCol":
-        const { tableConf } = this.props
-        const names = pluck("name", tableConf)
-        return names.map((name, i) => (
-          <div className={displayClass} key={i}>
-            <Checkbox
-              onChange={this.toggleCol}
-              id={`${window.location.pathname}-check-box-${i}`}
-              defaultChecked={showCol[i]}
-            />
-            {name}
-          </div>
-        ))
-
-      case "order":
-        return (
-          <div>
-            <div
-              className={menuItem}
-              onClick={() => this.updateFilter({ sort: "DESC" })}>
-              Date: Newest to oldest
-            </div>
-            <div
-              className={menuItem}
-              onClick={() => this.updateFilter({ sort: "ASC" })}>
-              Date: Oldest to newest
-            </div>
-          </div>
-        )
-
-      case "limit":
-        return (
-          <div>
-            {[5, 10, 15, 20, 25, 50, 100].map((num, key) => (
-              <div
-                key={key}
-                className={menuItem}
-                onClick={() => this.updateFilter({ limit: num, offset: 0 })}>
-                {num}
-              </div>
-            ))}
-          </div>
-        )
-
-      default:
-        break
-    }
-  }
-
-  /********************************* render(x,y) Table Item ************************************/
-  renderXYItem = (item, index = 0) => {
-    const { exportClass } = styles
-    const { showCol } = this.state
-    const tableConf = this.props.tableConf.filter((e, i) => showCol[i])
-    const itemInfo = tableConf[index]
-    const type = itemInfo.type
-    switch (type) {
-      case "text":
-        return item
-      case "date":
-        // if Date = 1122334455 then is total row  FIX ME!!!!!!!!!!!!!
-        if (item === 1122334455) return "Total"
-        else return format(item, "MMM Do YYYY")
-      case "renderer":
-        return itemInfo.renderer(item)
-
-      case "file":
-        return <img className={exportClass} src="/images/export.svg" alt="" />
-      default:
-        return item
-    }
   }
 
   /************************ Toggle PopOver for various elems ***********************************/
@@ -128,7 +67,6 @@ class Table extends Component {
       : this.setState({ popOver: evt.target })
   }
 
-  /*********************** Close popOver and update Filters ************************************/
   updateFilter = obj => {
     const { updateFilters } = this.props
     this.setState({ popOver: null })
@@ -143,57 +81,119 @@ class Table extends Component {
     this.setState({ showCol })
   }
 
-  changeOffset = direction => {
-    const { updateFilters, total } = this.props
-    const { offset, limit } = this.props.filters
+  changeOffset = ({ currentTarget }) => {
+    const {
+      updateFilters,
+      total,
+      filters: { offset, limit }
+    } = this.props
+    const direction = +currentTarget.getAttribute("offset")
     const maxPages = limit > total ? 1 : Math.ceil(total / limit)
-    const currentPage = offset / limit
+    const currentPage = offset
     const newOffset = currentPage + direction
     const isValid = newOffset > -1 && newOffset < maxPages
-    if (isValid) updateFilters({ offset: newOffset * limit })
+    if (isValid) updateFilters({ offset: newOffset })
+  }
+
+  /*********************************Determines what popover will show**********************************/
+  popOverContent = () => {
+    const { type } = this.state.popOver.dataset
+    const { showCol } = this.state
+    switch (type) {
+      case "displayCol":
+        const { tableConf } = this.props
+        const names = tableConf.map(({ name }) => name)
+        return names.map((name, i) => (
+          <div className={displayClass} key={i}>
+            <Checkbox
+              onChange={this.toggleCol}
+              id={`${window.location.pathname}-check-box-${i}`}
+              defaultChecked={showCol[i]}
+            />
+            {name}
+          </div>
+        ))
+      default:
+        break
+    }
+  }
+
+  handleChangeLimit = ({ currentTarget }) => {
+    const { updateFilters } = this.props
+    const num = currentTarget.value
+    updateFilters({ limit: num, offset: 0 })
+  }
+
+  handleChangeOrder = ({ currentTarget }) => {
+    const { updateFilters } = this.props
+    const value = currentTarget.value
+    updateFilters({ sort: value })
+  }
+
+  handleSearch = ({ currentTarget }) => {
+    const { updateFilters } = this.props
+    updateFilters({ keyword: currentTarget.value })
+  }
+
+  setAvailableFilters = ({ currentTarget }) => {
+    const { updateFilters, availableFiltersLabel } = this.props
+    updateFilters({ [availableFiltersLabel]: currentTarget.value })
   }
 
   render() {
-    const { data, loading, total = 0 } = this.props
-    const { sort, limit, offset } = this.props.filters
-    const { popOver, showCol } = this.state
-    const tableConf = this.props.tableConf.filter((e, i) => showCol[i])
-    const names = pluck("name", tableConf)
-
-    const keys = pluck("key", tableConf)
-    const currentPage = offset / limit
-    const maxPages = limit > total ? 1 : Math.ceil(total / limit)
-    const orderText =
-      sort && sort.match(/ASC/g)
-        ? `Date Oldest to Newest`
-        : `Date Newest to Oldest`
     const {
-      container,
-      rowClass,
-      infos,
-      columnClass,
-      preHeader,
-      tableFilter,
-      footFilterItems,
-      offsetArrow,
-      upperFilters,
-      offsetCont,
-      footFiltersCont
-    } = styles
-
+      data = [],
+      total,
+      filters,
+      availableFilters = [],
+      availableFiltersLabel = "Status"
+    } = this.props
+    const { popOver, showCol } = this.state
+    const { limit } = filters
+    const currentPage = +filters.offset
+    const maxPages = limit > total ? 1 : Math.ceil(total / limit)
+    const tableConf = this.props.tableConf.filter((_, i) => showCol[i])
+    const sortMsg =
+      filters.sort === "DESC"
+        ? "Date: Newest to oldest"
+        : filters.sort === "ASC"
+          ? "Date: Oldest to newest"
+          : ""
     return (
-      <div className={container}>
-        {/********************* Filters ********************************************************/}
-        <div className={preHeader}>
-          <div className={infos}>
-            <label>Total {total} Entries</label>
+      <div className={containers}>
+        <div className={topFilters}>
+          <div className={`${tableFilter} no-margin`}>
+            {availableFiltersLabel}
+            :&nbsp;
+            <Select onChange={this.setAvailableFilters} defaultValue={sortMsg}>
+              <option value="" />
+              {availableFilters.map((value, key) => (
+                <option value={value} key={key}>
+                  {value}
+                </option>
+              ))}
+            </Select>
           </div>
-          <div className={upperFilters}>
-            <div
-              className={tableFilter}
-              data-type="order"
-              onClick={this.toogglePopOver}>
-              Sort by: {orderText} ▾
+          <input
+            className={input}
+            onChange={this.handleSearch}
+            placeholder="🔎 Search..."
+          />
+        </div>
+
+        <div className={bottomFilters}>
+          <div>{total} entries</div>
+          <div className={sortDisplayCont}>
+            <div className={tableFilter}>
+              Sort By
+              <Select onChange={this.handleChangeOrder} defaultValue={sortMsg}>
+                <option value="" />
+                {sortBy.map(({ name, value }, key) => (
+                  <option value={value} key={key}>
+                    {name}
+                  </option>
+                ))}
+              </Select>
             </div>
             <div
               onClick={this.toogglePopOver}
@@ -204,44 +204,43 @@ class Table extends Component {
           </div>
         </div>
 
-        {/********************* Tabel Header ***************************************************/}
-        <div className={`${rowClass} header`}>
-          {names.map((objKey, columnKey) => (
-            <div
-              onClick={this.sortByField}
-              data-keyname={keys[columnKey]}
-              className={columnClass}
-              key={columnKey}>
-              {objKey}
-            </div>
-          ))}
-        </div>
-
-        {/********************* Table Body *****************************************************/}
-        <SpinnerHOC loading={loading}>
-          {data.map((obj, rowKey) => (
-            <div key={rowKey} className={rowClass}>
-              {keys.map((key, columnKey) => (
-                <div className={columnClass} key={columnKey}>
-                  {this.renderXYItem(obj[key], columnKey)}
-                </div>
+        <table className={table}>
+          <thead className={row}>
+            <tr>
+              {tableConf.map(({ name }, key) => (
+                <th className={col} key={key}>
+                  {name}
+                </th>
               ))}
-            </div>
-          ))}
-        </SpinnerHOC>
+            </tr>
+          </thead>
+          <tbody>
+            {data.map((obj, rowKey) => (
+              <tr key={rowKey} className={row}>
+                {tableConf.map((conf, colKey) => (
+                  <td key={colKey} className={col}>
+                    <Render {...conf} obj={obj} />
+                  </td>
+                ))}
+              </tr>
+            ))}
+          </tbody>
+        </table>
 
-        {/********************* Foot Filters **************************************************/}
         <div className={footFiltersCont}>
           <div className={footFilterItems}>
-            <div
-              className={tableFilter}
-              onClick={this.toogglePopOver}
-              data-type="limit">
-              Row per page {limit} ▾
+            <div className={tableFilter}>
+              Row per page
+              <Select onChange={this.handleChangeLimit} defaultValue={+limit}>
+                {selectFromRows.map((value, key) => (
+                  <option key={key}> {value}</option>
+                ))}
+              </Select>
             </div>
             <div className={offsetCont}>
               <div
-                onClick={() => this.changeOffset(-1)}
+                offset={-1}
+                onClick={this.changeOffset}
                 className={`${offsetArrow} ${
                   currentPage === 0 ? "disable" : ""
                 }`}>
@@ -251,7 +250,8 @@ class Table extends Component {
                 Page <b>{currentPage + 1}</b> of <b>{maxPages}</b>
               </div>
               <div
-                onClick={() => this.changeOffset(1)}
+                offset={1}
+                onClick={this.changeOffset}
                 className={`${offsetArrow} ${
                   currentPage + 1 === maxPages ? "disable" : ""
                 }`}>
@@ -260,8 +260,6 @@ class Table extends Component {
             </div>
           </div>
         </div>
-
-        {/********************* Pop over ******************************************************/}
         <Popover
           open={Boolean(popOver)}
           anchorEl={popOver}

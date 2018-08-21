@@ -1,29 +1,21 @@
 import React, { Component } from "react"
-import Button from "@material-ui/core//Button"
 import * as styles from "./css"
 
 class Tabs extends Component {
   constructor() {
     super()
-    const path = window.location.pathname.replace(/\//, "")
     const state = {
-      active: path
+      active: "General Info"
     }
     this.state = state
   }
 
   activateTab = ({ currentTarget }) => {
-    const {
-      setView,
-      tabsArr,
-      history: { push }
-    } = this.props
+    const { setActive } = this.props
     const textContent = currentTarget.textContent
-    const find = tabsArr.find(({ name }) => name === textContent)
-    const active = find.activeOn
+    const active = textContent
     this.setState({ active })
-    setView(active)
-    push(active)
+    setActive(active)
   }
 
   isActive = tab => {
@@ -33,17 +25,18 @@ class Tabs extends Component {
 
   render() {
     const { tabsArr = [], extraClass } = this.props
-    const { tabs, tabBtn, tabItem, tabsCont } = styles
-
+    const { tabs, btn, tabsCont } = styles
+    console.log(this.state.active)
     return (
       <div className={tabsCont}>
         <div className={`${tabs} ${extraClass}`}>
-          {tabsArr.map((obj, key) => (
-            <div
+          {tabsArr.map((name, key) => (
+            <button
+              key={key}
               onClick={this.activateTab}
-              className={`${tabItem} ${this.isActive(obj.activeOn)}`}>
-              <Button className={tabBtn}>{obj.name}</Button>
-            </div>
+              className={`${btn} ${this.isActive(name) ? "active" : ""}`}>
+              {name}
+            </button>
           ))}
         </div>
       </div>

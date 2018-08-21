@@ -31,4 +31,13 @@ export const UPDATE_FILTERS = "[Table] Update Filters"
 export const CLEAR_FILTERS = "[Table] Clear Filters"
 
 /********************** CUSTOMERS *********************************************/
-export const UPDATE_CUSTOMERS = "[App] Request to get Customers"
+export const UPDATE_CUSTOMERS = "[App] Update Customers"
+export const GET_CUSTOMERS = "[App] Request to get Customers"
+export const GET_CURRENT_CUSTOMER = "[App] Request to get Current Customer"
+export const CLEAR_CUSTOMERS = "INIT_CUSTOMERS"
+export const SET_CURRENT_CUSTOMER = "[App] Set Current Customer"
+
+/********************** USERS *********************************************/
+export const UPDATE_USERS = "[App] Update Users"
+export const GET_USERS = "[App] Request to get Users"
+export const CLEAR_USERS = "INIT_USERS"

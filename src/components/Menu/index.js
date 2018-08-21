@@ -60,7 +60,7 @@ class Menu extends Component {
 
   render() {
     const sections = keys(menuItems)
-    const { name, imgUrl } = this.props
+    const { name, imgUrl = "/images/img_avatar.png" } = this.props
     return (
       <div>
         <img

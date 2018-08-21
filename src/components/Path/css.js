@@ -9,8 +9,9 @@ export const container = css`
     margin-right: 2px;
     color: #008fd8;
     ::after {
-      content: "/";
+      content: " / ";
     }
+ 
     &:last-child {
       user-select: auto;
       color: #9e9c9c;
@@ -19,6 +20,7 @@ export const container = css`
         content: none;
       }
     }
+
     &:only-child {
       user-select: none;
       cursor: pointer;

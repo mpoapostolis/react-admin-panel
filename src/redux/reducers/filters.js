@@ -4,8 +4,8 @@ import { UPDATE_FILTERS, CLEAR_FILTERS } from "../actions/names"
 const initFilters = {
   offset: 0,
   limit: 10,
-  sort: "DESC",
-  type: "weekly",
+  sort: "",
+  type: "",
   showCols: []
 }
 

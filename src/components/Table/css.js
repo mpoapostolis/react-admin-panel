@@ -1,70 +1,68 @@
 import { css } from "emotion"
 
-export const container = css`
+export const containers = css`
   width: 100%;
-`
-
-export const preHeader = css`
-  width: 100%;
-  display: flex;
-  height: 25px;
-  align-items: center;
-  justify-content: space-between;
-`
-
-export const infos = css`
-  width: calc(100% - 400px);
-  display: flex;
-  font-weight: 600;
   font-size: small;
   color: #6b6b6b;
 `
 
-export const upperFilters = css`
-  width: 400px;
-  margin-bottom: 40px;
+export const topFilters = css`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  flex-wrap: wrap;
+  border-bottom: solid 1px #0001;
+  font-size: small;
+`
+
+export const bottomFilters = css`
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0 20px 0;
+`
+
+export const input = css`
+  border: solid 1px #0002;
+  transition: all 0.125s;
+  padding: 5px;
+  height: 20px;
+  width: 150px;
+  border-radius: 4px;
+  &:focus {
+    width: 250px;
+  }
+`
+
+export const table = css`
+  width: 100%;
+`
+
+export const row = css`
+  width: 100%;
+  height: 63px;
+`
+
+export const col = css`
+  text-align: left;
+  border-bottom: solid 1px rgba(0, 0, 0, 0.05);
+`
+
+export const menuItem = css`
+  min-width: 150px;
+  padding: 15px;
+  user-select: none;
   display: flex;
   justify-content: space-around;
-`
-
-export const tableFilter = css`
-  cursor: pointer;
-  user-select: none;
-  margin: 0 30px 0 30px;
-`
-
-export const rowClass = css`
-  border-bottom: solid 1px #00000022;
-  white-space: pre-line;
-  &.header {
-    color: #717171;
-    font-size: medium;
-  }
-  min-height: 50px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-`
-
-export const columnClass = css`
-  width: 100%;
-  padding: 2px;
-  display: flex;
-  justify-content: flex-start;
   align-items: center;
-  &:last-child {
-    justify-content: center;
+  outline: none;
+  background: #fff;
+  border-bottom: solid 1px #0002;
+  &:hover {
+    background: rgba(0, 0, 0, 0.05);
   }
-`
-
-export const exportClass = css`
   cursor: pointer;
-`
-
-export const sortClass = css`
-  background: transparent;
-  border: none;
-  margin-left: 5px;
 `
 
 export const displayClass = css`
@@ -77,21 +75,6 @@ export const displayClass = css`
   input {
     margin-right: 10px;
   }
-`
-
-export const menuItem = css`
-  width: 200px;
-  padding: 15px;
-  user-select: none;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  outline: none;
-  background: #fff;
-  &:hover {
-    background: rgba(0, 0, 0, 0.05);
-  }
-  cursor: pointer;
 `
 
 export const footFiltersCont = css`
@@ -107,10 +90,21 @@ export const footFilterItems = css`
   justify-content: space-around;
 `
 
+export const tableFilter = css`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  margin: 0 30px 0 30px;
+  &.no-margin {
+    margin: 0;
+  }
+`
+
 export const offsetCont = css`
   justify-content: space-between;
   display: flex;
-  height: 100%;
+  align-items: center;
   min-width: 120px;
 `
 
@@ -121,4 +115,8 @@ export const offsetArrow = css`
     opacity: 0.2;
     cursor: not-allowed;
   }
+`
+
+export const sortDisplayCont = css`
+  display: flex;
 `
